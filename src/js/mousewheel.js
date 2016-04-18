@@ -70,6 +70,7 @@ function handleMousewheel(e) {
 
     if (!s.params.freeMode) {
         if ((new window.Date()).getTime() - s.mousewheel.lastScrollTime > 60) {
+            s.mousewheel.lastScrollTime = (new window.Date()).getTime();
             if (delta < 0) {
                 if ((!s.isEnd || s.params.loop) && !s.animating) s.slideNext();
                 else if (s.params.mousewheelReleaseOnEdges) return true;
@@ -79,7 +80,6 @@ function handleMousewheel(e) {
                 else if (s.params.mousewheelReleaseOnEdges) return true;
             }
         }
-        s.mousewheel.lastScrollTime = (new window.Date()).getTime();
 
     }
     else {
