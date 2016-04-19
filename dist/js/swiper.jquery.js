@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 7, 2016
+ * Released on: April 19, 2016
  */
 (function () {
     'use strict';
@@ -3178,6 +3178,7 @@
         
             if (!s.params.freeMode) {
                 if ((new window.Date()).getTime() - s.mousewheel.lastScrollTime > 60) {
+                    s.mousewheel.lastScrollTime = (new window.Date()).getTime();
                     if (delta < 0) {
                         if ((!s.isEnd || s.params.loop) && !s.animating) s.slideNext();
                         else if (s.params.mousewheelReleaseOnEdges) return true;
@@ -3187,7 +3188,6 @@
                         else if (s.params.mousewheelReleaseOnEdges) return true;
                     }
                 }
-                s.mousewheel.lastScrollTime = (new window.Date()).getTime();
         
             }
             else {
