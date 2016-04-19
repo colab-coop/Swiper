@@ -3177,7 +3177,7 @@
             if (s.params.mousewheelInvert) delta = -delta;
         
             if (!s.params.freeMode) {
-                if ((new window.Date()).getTime() - s.mousewheel.lastScrollTime > 60) {
+                if ((new window.Date()).getTime() - s.mousewheel.lastScrollTime > 200) {
                     s.mousewheel.lastScrollTime = (new window.Date()).getTime();
                     if (delta < 0) {
                         if ((!s.isEnd || s.params.loop) && !s.animating) s.slideNext();
