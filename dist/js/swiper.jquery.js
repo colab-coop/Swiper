@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 12, 2017
+ * Released on: September 13, 2017
  */
 (function () {
     'use strict';
@@ -742,7 +742,8 @@
                 }
                 if (slide.css('display') === 'none') continue;
                 if (s.params.slidesPerView === 'auto') {
-                    slideSize = s.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
+                    var outerWidth = ( s.params.targetWidth ) ? s.params.targetWidth : slide.outerWidth(true);
+                    slideSize = s.isHorizontal() ? outerWidth : slide.outerHeight(true);
                     if (s.params.roundLengths) slideSize = round(slideSize);
                 }
                 else {

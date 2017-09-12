@@ -719,7 +719,8 @@ s.updateSlidesSize = function () {
         }
         if (slide.css('display') === 'none') continue;
         if (s.params.slidesPerView === 'auto') {
-            slideSize = s.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
+            var outerWidth = ( s.params.targetWidth ) ? s.params.targetWidth : slide.outerWidth(true);
+            slideSize = s.isHorizontal() ? outerWidth : slide.outerHeight(true);
             if (s.params.roundLengths) slideSize = round(slideSize);
         }
         else {
