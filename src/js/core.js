@@ -20,6 +20,8 @@ var defaults = {
     freeModeMinimumVelocity: 0.02,
     // Autoheight
     autoHeight: false,
+    // Target Width
+    targetWidth: false,
     // Set wrapper width
     setWrapperSize: false,
     // Virtual Translate
@@ -677,6 +679,9 @@ s.updateSlidesSize = function () {
     for (i = 0; i < s.slides.length; i++) {
         slideSize = 0;
         var slide = s.slides.eq(i);
+        if ( s.params.targetWidth ) {
+            slide[0].setAttribute('data-width', s.params.targetWidth)
+        }
         if (s.params.slidesPerColumn > 1) {
             // Set slides order
             var newSlideOrderIndex;
@@ -714,7 +719,8 @@ s.updateSlidesSize = function () {
         }
         if (slide.css('display') === 'none') continue;
         if (s.params.slidesPerView === 'auto') {
-            slideSize = s.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
+            var outerWidth = ( s.params.targetWidth ) ? s.params.targetWidth : slide.outerWidth(true);
+            slideSize = s.isHorizontal() ? outerWidth : slide.outerHeight(true);
             if (s.params.roundLengths) slideSize = round(slideSize);
         }
         else {
