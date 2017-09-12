@@ -293,10 +293,11 @@ var Dom7 = (function () {
         },
         outerWidth: function (includeMargins) {
             if (this.length > 0) {
+                var targetWidth = parseFloat(this[0].getAttribute('data-width')) || this[0].offsetWidth;
                 if (includeMargins)
-                    return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
+                    return targetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
                 else
-                    return this[0].offsetWidth;
+                    return targetWidth;
             }
             else return null;
         },

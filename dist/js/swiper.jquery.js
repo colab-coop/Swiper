@@ -4,13 +4,13 @@
  * 
  * http://www.idangero.us/swiper/
  * 
- * Copyright 2016, Vladimir Kharlampidi
+ * Copyright 2017, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: April 19, 2016
+ * Released on: September 12, 2017
  */
 (function () {
     'use strict';
@@ -43,6 +43,8 @@
             freeModeMinimumVelocity: 0.02,
             // Autoheight
             autoHeight: false,
+            // Target Width
+            targetWidth: false,
             // Set wrapper width
             setWrapperSize: false,
             // Virtual Translate
@@ -700,6 +702,9 @@
             for (i = 0; i < s.slides.length; i++) {
                 slideSize = 0;
                 var slide = s.slides.eq(i);
+                if ( s.params.targetWidth ) {
+                    slide[0].setAttribute('data-width', s.params.targetWidth)
+                }
                 if (s.params.slidesPerColumn > 1) {
                     // Set slides order
                     var newSlideOrderIndex;
