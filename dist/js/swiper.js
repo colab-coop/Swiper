@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 13, 2017
+ * Released on: October 3, 2017
  */
 (function () {
     'use strict';
@@ -45,6 +45,8 @@
             autoHeight: false,
             // Target Width
             targetWidth: false,
+            targetHeight: false,
+            fixedSize: false,
             // Set wrapper width
             setWrapperSize: false,
             // Virtual Translate
@@ -703,7 +705,10 @@
                 slideSize = 0;
                 var slide = s.slides.eq(i);
                 if ( s.params.targetWidth ) {
-                    slide[0].setAttribute('data-width', s.params.targetWidth)
+                    slide[0].setAttribute('data-width', s.params.targetWidth);
+                }
+                if ( s.params.targetHeight ) {
+                    slide[0].setAttribute('data-height', s.params.targetHeight);
                 }
                 if (s.params.slidesPerColumn > 1) {
                     // Set slides order
@@ -743,18 +748,22 @@
                 if (slide.css('display') === 'none') continue;
                 if (s.params.slidesPerView === 'auto') {
                     var outerWidth = ( s.params.targetWidth ) ? s.params.targetWidth : slide.outerWidth(true);
-                    slideSize = s.isHorizontal() ? outerWidth : slide.outerHeight(true);
+                    var outerHeight = ( s.params.targetHeight ) ? s.params.targetHeight : slide.outerHeight(true);
+                    slideSize = s.isHorizontal() ? outerWidth : outerHeight;
                     if (s.params.roundLengths) slideSize = round(slideSize);
                 }
                 else {
                     slideSize = (s.size - (s.params.slidesPerView - 1) * spaceBetween) / s.params.slidesPerView;
                     if (s.params.roundLengths) slideSize = round(slideSize);
-        
-                    if (s.isHorizontal()) {
-                        s.slides[i].style.width = slideSize + 'px';
-                    }
-                    else {
-                        s.slides[i].style.height = slideSize + 'px';
+                    if ( s.params.fixedSize ) {
+                        s.slides[i].style.width = s.params.targetWidth + 'px';
+                        s.slides[i].style.height =  s.params.targetHeight + 'px';
+                    } else {
+                        if (s.isHorizontal()) {
+                            s.slides[i].style.width = slideSize + 'px';
+                        } else {
+                            s.slides[i].style.height = slideSize + 'px';
+                        }
                     }
                 }
                 s.slides[i].swiperSlideSize = slideSize;
@@ -4008,10 +4017,11 @@
             },
             outerHeight: function (includeMargins) {
                 if (this.length > 0) {
+                    var targetHeight = parseFloat(this[0].getAttribute('data-height')) || this[0].offsetHeight;
                     if (includeMargins)
-                        return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
+                        return targetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
                     else
-                        return this[0].offsetHeight;
+                        return targetHeight;
                 }
                 else return null;
             },
