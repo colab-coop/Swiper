@@ -316,10 +316,11 @@ var Dom7 = (function () {
         },
         outerHeight: function (includeMargins) {
             if (this.length > 0) {
+                var targetHeight = parseFloat(this[0].getAttribute('data-height')) || this[0].offsetHeight;
                 if (includeMargins)
-                    return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
+                    return targetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
                 else
-                    return this[0].offsetHeight;
+                    return targetHeight;
             }
             else return null;
         },

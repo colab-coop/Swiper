@@ -22,6 +22,8 @@ var defaults = {
     autoHeight: false,
     // Target Width
     targetWidth: false,
+    targetHeight: false,
+    fixedSize: false,
     // Set wrapper width
     setWrapperSize: false,
     // Virtual Translate
@@ -680,7 +682,10 @@ s.updateSlidesSize = function () {
         slideSize = 0;
         var slide = s.slides.eq(i);
         if ( s.params.targetWidth ) {
-            slide[0].setAttribute('data-width', s.params.targetWidth)
+            slide[0].setAttribute('data-width', s.params.targetWidth);
+        }
+        if ( s.params.targetHeight ) {
+            slide[0].setAttribute('data-height', s.params.targetHeight);
         }
         if (s.params.slidesPerColumn > 1) {
             // Set slides order
@@ -720,18 +725,22 @@ s.updateSlidesSize = function () {
         if (slide.css('display') === 'none') continue;
         if (s.params.slidesPerView === 'auto') {
             var outerWidth = ( s.params.targetWidth ) ? s.params.targetWidth : slide.outerWidth(true);
-            slideSize = s.isHorizontal() ? outerWidth : slide.outerHeight(true);
+            var outerHeight = ( s.params.targetHeight ) ? s.params.targetHeight : slide.outerHeight(true);
+            slideSize = s.isHorizontal() ? outerWidth : outerHeight;
             if (s.params.roundLengths) slideSize = round(slideSize);
         }
         else {
             slideSize = (s.size - (s.params.slidesPerView - 1) * spaceBetween) / s.params.slidesPerView;
             if (s.params.roundLengths) slideSize = round(slideSize);
-
-            if (s.isHorizontal()) {
-                s.slides[i].style.width = slideSize + 'px';
-            }
-            else {
-                s.slides[i].style.height = slideSize + 'px';
+            if ( s.params.fixedSize ) {
+                s.slides[i].style.width = s.params.targetWidth + 'px';
+                s.slides[i].style.height =  s.params.targetHeight + 'px';
+            } else {
+                if (s.isHorizontal()) {
+                    s.slides[i].style.width = slideSize + 'px';
+                } else {
+                    s.slides[i].style.height = slideSize + 'px';
+                }
             }
         }
         s.slides[i].swiperSlideSize = slideSize;
